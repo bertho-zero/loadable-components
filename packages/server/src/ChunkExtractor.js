@@ -186,9 +186,14 @@ class ChunkExtractor {
   }
 
   getChunkGroup(chunk) {
-    const chunkGroup = this.stats.namedChunkGroups[chunk]
-    invariant(chunkGroup, `cannot find ${chunk} in stats`)
-    return chunkGroup
+    for (const groupName in this.stats.namedChunkGroups) {
+      const group = this.stats.namedChunkGroups[groupName]
+      if (group.chunks.some(chunkName => chunk === chunkName)) {
+        return group
+      }
+    }
+
+    invariant(false, `cannot find ${chunk} in stats`)
   }
 
   createChunkAsset({ filename, chunk, type, linkType }) {
