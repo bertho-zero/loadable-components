@@ -186,6 +186,12 @@ class ChunkExtractor {
   }
 
   getChunkGroup(chunk) {
+    const chunkGroup = this.stats.namedChunkGroups[chunk]
+
+    if (chunkGroup) {
+      return chunkGroup
+    }
+
     const asset = this.stats.assets.find(asset => asset.chunkNames.some(name => name === chunk))
 
     for (const groupName in this.stats.namedChunkGroups) {
